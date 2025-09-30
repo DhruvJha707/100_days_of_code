@@ -1,40 +1,42 @@
-// Q66: Insert an element in a sorted array at the appropriate position.
+// Q65: Search in a sorted array using binary search.
 
 #include <stdio.h>
 int main() {
-    int n, i, x, pos;
-    int a[100];
+    int n, a[100], i, x;
+    int low, high, mid, found=0;
 
     printf("Enter size: ");
-    scanf("%d", &n);
+    scanf("%d",&n);
 
-    printf("Enter %d elements (sorted): ", n);
+    printf("Enter %d sorted elements: ",n);
     for(i=0;i<n;i++) {
-        scanf("%d", &a[i]);
+        scanf("%d",&a[i]);
     }
 
-    printf("Enter element to insert: ");
-    scanf("%d", &x);
+    printf("Enter element to search: ");
+    scanf("%d",&x);
 
-    // find position
-    pos = n;
-    for(i=0;i<n;i++) {
-        if(x < a[i]) {
-            pos = i;
+    low=0;
+    high=n-1;
+
+    while(low<=high) {
+        mid = (low+high)/2;
+
+        if(a[mid]==x) {
+            printf("Element %d found at position %d\n",x,mid+1);
+            found=1;
             break;
+        }
+        else if(x<a[mid]) {
+            high=mid-1;
+        }
+        else {
+            low=mid+1;
         }
     }
 
-    // shift right
-    for(i=n;i>pos;i--) {
-        a[i] = a[i-1];
-    }
-    a[pos] = x;
-    n++;
-
-    printf("Array after insertion:\n");
-    for(i=0;i<n;i++) {
-        printf("%d ", a[i]);
+    if(!found) {
+        printf("Element not found\n");
     }
 
     return 0;
@@ -45,9 +47,16 @@ int main() {
 Sample Test Cases:
 Input 1:
 5
-1 2 4 5 6
-3
+1 3 5 7 9
+7
 Output 1:
-1 2 3 4 5 6
+Found at index 3
+
+Input 2:
+5
+1 3 5 7 9
+6
+Output 2:
+-1
 
 */
